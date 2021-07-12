@@ -121,7 +121,7 @@ int zf_pattern(char* s, char* subs, int* b) {
 	for (size_t i = ns; i < n; i++) {
 		int t = a[i];
 		if (a[i] == ns) {
-			b[k] = i - ns - 2;
+			b[k] = i - ns - 1;
 			++k;
 		}
 	}
