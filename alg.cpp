@@ -1,6 +1,6 @@
 #include "alg.h"
 
-//Возвращает длину строки s
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г¤Г«ГЁГ­Гі Г±ГІГ°Г®ГЄГЁ s
 static int strlen(char* s) {
 	char* ps = s;
 	while (*s != SEP)
@@ -49,7 +49,7 @@ int optim_pattern(char* s, char* subs, int* a) {
 }
 
 
-//Возвращает число символов в строке s совпадающих с i1 и i2 позиций
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г·ГЁГ±Г«Г® Г±ГЁГ¬ГўГ®Г«Г®Гў Гў Г±ГІГ°Г®ГЄГҐ s Г±Г®ГўГЇГ Г¤Г ГѕГ№ГЁГµ Г± i1 ГЁ i2 ГЇГ®Г§ГЁГ¶ГЁГ©
 static int cmp(char* s, int i1, int i2) {
 	int r = 0;
 	char* pi1, * pi2;
@@ -63,14 +63,14 @@ static int cmp(char* s, int i1, int i2) {
 	return(r);
 }
 
-//Записывает в a z-функцию строки s
+//Г‡Г ГЇГЁГ±Г»ГўГ ГҐГІ Гў a z-ГґГіГ­ГЄГ¶ГЁГѕ Г±ГІГ°Г®ГЄГЁ s
 static void block(char* s, int* a) {
 	int n = strlen(s);
 	int l = -1;
 	int r = -1;
 	a[0] = 0;
 	for (int i = 1; i < n; i++) {
-		if (r < i) {
+		if (r < i) { 
 			a[i] = cmp(s, i, 0);
 			if (a[i] > 0) {
 				r = a[i] + i - 1;
@@ -95,7 +95,7 @@ static void block(char* s, int* a) {
 	}
 }
 
-//Специальная конкатенация строк s1 и s2
+//Г‘ГЇГҐГ¶ГЁГ Г«ГјГ­Г Гї ГЄГ®Г­ГЄГ ГІГҐГ­Г Г¶ГЁГї Г±ГІГ°Г®ГЄ s1 ГЁ s2
 static void strcat(char* s1, char* s2) {
 	while (*s1 != SEP)
 		++s1;
@@ -110,7 +110,7 @@ static void strcat(char* s1, char* s2) {
 int zf_pattern(char* s, char* subs, int* b) {
 	char* buf = (char*)calloc(100000100, 1);
 	int ns = strlen(subs);
-	char ts[3] = "•\n";
+	char ts[3] = "вЂў\n";
 	strcat(buf, subs);
 	strcat(buf, ts);
 	strcat(buf, s);
@@ -130,7 +130,7 @@ int zf_pattern(char* s, char* subs, int* b) {
 	return(k);
 }
 
-//Возвращает хешь подстроки строки s с началом в i1, концом в i2 - 1 по модулю 2^64
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ ГµГҐГёГј ГЇГ®Г¤Г±ГІГ°Г®ГЄГЁ Г±ГІГ°Г®ГЄГЁ s Г± Г­Г Г·Г Г«Г®Г¬ Гў i1, ГЄГ®Г­Г¶Г®Г¬ Гў i2 - 1 ГЇГ® Г¬Г®Г¤ГіГ«Гѕ 2^64
 static long long fhash(char* s, long long i1, long long i2) {
 	unsigned long long r = (unsigned char)s[i1];
 	for (long long i = i1 + 1; i <= i2; ++i) {
@@ -165,7 +165,7 @@ int fast_rk(char* s, char* subs, int* a) {
 	return(k);
 }
 
-//Возвращает i наиболее способствующее быстродействию определения позиций подстрок subs в строке s
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ i Г­Г ГЁГЎГ®Г«ГҐГҐ Г±ГЇГ®Г±Г®ГЎГ±ГІГўГіГѕГ№ГҐГҐ ГЎГ»Г±ГІГ°Г®Г¤ГҐГ©Г±ГІГўГЁГѕ Г®ГЇГ°ГҐГ¤ГҐГ«ГҐГ­ГЁГї ГЇГ®Г§ГЁГ¶ГЁГ© ГЇГ®Г¤Г±ГІГ°Г®ГЄ subs Гў Г±ГІГ°Г®ГЄГҐ s
 static long long find_i(char* s, char* subs) {
 	long long ns = strlen(s);
 	long long nsubs = strlen(subs);
@@ -173,14 +173,14 @@ static long long find_i(char* s, char* subs) {
 	if (i < 0 || i >= 1 << 54) {
 		long long max = ~(unsigned long long)0 >> 10;
 		if (i <= max && i > 0)
-			printf("Ожидаемая вероятность ложного совпадения простых чисел %f\n", 2.53 / ns);
+			printf("ГЋГ¦ГЁГ¤Г ГҐГ¬Г Гї ГўГҐГ°Г®ГїГІГ­Г®Г±ГІГј Г«Г®Г¦Г­Г®ГЈГ® Г±Г®ГўГЇГ Г¤ГҐГ­ГЁГї ГЇГ°Г®Г±ГІГ»Гµ Г·ГЁГ±ГҐГ« %f\n", 2.53 / ns);
 
 		i = max;
 	}
 	return((long long)i);
 }
 
-//Если i простое число возвращает 1, иначе 0
+//Г…Г±Г«ГЁ i ГЇГ°Г®Г±ГІГ®ГҐ Г·ГЁГ±Г«Г® ГўГ®Г§ГўГ°Г Г№Г ГҐГІ 1, ГЁГ­Г Г·ГҐ 0
 static long long is_prime(long long i) {
 	long long sqrt_t = (long long)sqrt(i);
 	if (i < 10)
@@ -197,7 +197,7 @@ static long long is_prime(long long i) {
 	return(1);
 }
 
-//Возвращает модуль для алгоритма Рабина-Карпа
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г¬Г®Г¤ГіГ«Гј Г¤Г«Гї Г Г«ГЈГ®Г°ГЁГІГ¬Г  ГђГ ГЎГЁГ­Г -ГЉГ Г°ГЇГ 
 static long long get_module(char* s, char* subs) {
 	long long i = find_i(s, subs);
 	while (!is_prime(i))
@@ -205,7 +205,7 @@ static long long get_module(char* s, char* subs) {
 	return(i);
 }
 
-//Возвращает хешь подстроки строки s с началом в i1, концом в i2 по модулю q
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ ГµГҐГёГј ГЇГ®Г¤Г±ГІГ°Г®ГЄГЁ Г±ГІГ°Г®ГЄГЁ s Г± Г­Г Г·Г Г«Г®Г¬ Гў i1, ГЄГ®Г­Г¶Г®Г¬ Гў i2 ГЇГ® Г¬Г®Г¤ГіГ«Гѕ q
 static long long chash(char* s, long long i1, long long i2, long long q) {
 	unsigned long long r = (unsigned char)s[i1];
 	for (long long i = i1 + 1; i <= i2; ++i) {
@@ -244,7 +244,7 @@ int classic_rk(char* s, char* subs, int* a) {
 	return(k);
 }
 
-//Получает массив a граней подстрок s 
+//ГЏГ®Г«ГіГ·Г ГҐГІ Г¬Г Г±Г±ГЁГў a ГЈГ°Г Г­ГҐГ© ГЇГ®Г¤Г±ГІГ°Г®ГЄ s 
 static void prefix_arr(int* a, char* s) {
 	a[0] = 0;
 	int i = 1;
@@ -265,7 +265,7 @@ static void prefix_arr(int* a, char* s) {
 	}
 }
 
-//Преобразует массив a граней подстрок s в оптимальный для КМП вид
+//ГЏГ°ГҐГ®ГЎГ°Г Г§ГіГҐГІ Г¬Г Г±Г±ГЁГў a ГЈГ°Г Г­ГҐГ© ГЇГ®Г¤Г±ГІГ°Г®ГЄ s Гў Г®ГЇГІГЁГ¬Г Г«ГјГ­Г»Г© Г¤Г«Гї ГЉГЊГЏ ГўГЁГ¤
 static void prefix_up(int* a, char* s) {
 	int n = strlen(s);
 	for (int i = 1; i < n - 1; ++i) {
@@ -303,14 +303,14 @@ int smart_kmp(char* s, char* subs, int* b) {
 	return(i);
 }
 
-//Инициализирует массив a размера n числом x
+//Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГІ Г¬Г Г±Г±ГЁГў a Г°Г Г§Г¬ГҐГ°Г  n Г·ГЁГ±Г«Г®Г¬ x
 static void ini(int* a, int n, int x) {
 	for (size_t i = 0; i < n; i++) {
 		a[i] = x;
 	}
 }
 
-//Получает массив величин сдвигов a для БМХ алгоритма по образу subs
+//ГЏГ®Г«ГіГ·Г ГҐГІ Г¬Г Г±Г±ГЁГў ГўГҐГ«ГЁГ·ГЁГ­ Г±Г¤ГўГЁГЈГ®Гў a Г¤Г«Гї ГЃГЊГ• Г Г«ГЈГ®Г°ГЁГІГ¬Г  ГЇГ® Г®ГЎГ°Г Г§Гі subs
 static void bmh_shift_arr(int* a, char* subs) {
 	int n = strlen(subs);
 	ini(a, ALPHABET, n);
@@ -332,7 +332,7 @@ int basic_bmh(char* s, char* subs, int* b) {
 	--n;
 	int ns = strlen(s);
 	int i = n;
-	int k = 0; //Размер массива результата
+	int k = 0; //ГђГ Г§Г¬ГҐГ° Г¬Г Г±Г±ГЁГўГ  Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
 	while (i < ns) {
 		int j = n;
 		int i1 = 0;
@@ -349,7 +349,7 @@ int basic_bmh(char* s, char* subs, int* b) {
 	return(k);
 }
 
-//Возвращает 1 если указатель p1 указывает на начало палиндрома а p2 на его конец, иначе возвращает 0
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ 1 ГҐГ±Г«ГЁ ГіГЄГ Г§Г ГІГҐГ«Гј p1 ГіГЄГ Г§Г»ГўГ ГҐГІ Г­Г  Г­Г Г·Г Г«Г® ГЇГ Г«ГЁГ­Г¤Г°Г®Г¬Г  Г  p2 Г­Г  ГҐГЈГ® ГЄГ®Г­ГҐГ¶, ГЁГ­Г Г·ГҐ ГўГ®Г§ГўГ°Г Г№Г ГҐГІ 0
 static int is_palindrom(char* p1, char* p2) {
 	while (p1 <= p2) {
 		if (*p1 != *p2)
@@ -372,7 +372,7 @@ long long native_palindroms(char* s) {
 	return(r);
 }
 
-//Возвращает число палиндромов нечетной длины в s
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г·ГЁГ±Г«Г® ГЇГ Г«ГЁГ­Г¤Г°Г®Г¬Г®Гў Г­ГҐГ·ГҐГІГ­Г®Г© Г¤Г«ГЁГ­Г» Гў s
 static long long odd_count(char* s) {
 	char* fp = &(s[strlen(s) - 1]);
 	long long r = 0;
@@ -388,7 +388,7 @@ static long long odd_count(char* s) {
 	return(r);
 }
 
-//Возвращает число палиндромов четной длины в s
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г·ГЁГ±Г«Г® ГЇГ Г«ГЁГ­Г¤Г°Г®Г¬Г®Гў Г·ГҐГІГ­Г®Г© Г¤Г«ГЁГ­Г» Гў s
 static long long even_count(char* s) {
 	char* fp = &(s[strlen(s) - 1]);
 	long long r = 0;
@@ -408,7 +408,7 @@ long long fast_native_pal(char* s) {
 	return even_count(s) + odd_count(s);
 }
 
-//Записывает в массив a хеши префиксов строки s по основанию p
+//Г‡Г ГЇГЁГ±Г»ГўГ ГҐГІ Гў Г¬Г Г±Г±ГЁГў a ГµГҐГёГЁ ГЇГ°ГҐГґГЁГЄГ±Г®Гў Г±ГІГ°Г®ГЄГЁ s ГЇГ® Г®Г±Г­Г®ГўГ Г­ГЁГѕ p
 static void hash_prefix_arr(char* s, unsigned long long* a, unsigned long long p) {
 	unsigned long long h = 0;
 	int i = 0;
@@ -419,7 +419,7 @@ static void hash_prefix_arr(char* s, unsigned long long* a, unsigned long long p
 	}
 }
 
-//Записывает в массив a хеши суффиксов строки s по основанию p
+//Г‡Г ГЇГЁГ±Г»ГўГ ГҐГІ Гў Г¬Г Г±Г±ГЁГў a ГµГҐГёГЁ Г±ГіГґГґГЁГЄГ±Г®Гў Г±ГІГ°Г®ГЄГЁ s ГЇГ® Г®Г±Г­Г®ГўГ Г­ГЁГѕ p
 static void hash_suffix_arr(char* s, int n, unsigned long long* a, unsigned long long p) {
 	unsigned long long h = 0;
 	int i = n - 1;
@@ -432,7 +432,7 @@ static void hash_suffix_arr(char* s, int n, unsigned long long* a, unsigned long
 	}
 }
 
-//Записывает в массив a степени числа p до степени n
+//Г‡Г ГЇГЁГ±Г»ГўГ ГҐГІ Гў Г¬Г Г±Г±ГЁГў a Г±ГІГҐГЇГҐГ­ГЁ Г·ГЁГ±Г«Г  p Г¤Г® Г±ГІГҐГЇГҐГ­ГЁ n
 static void hash_degree_p(unsigned long long* a, int n, unsigned long long p) {
 	unsigned long long tp = 1;
 	for (int i = 0; i < n; ++i) {
@@ -441,7 +441,7 @@ static void hash_degree_p(unsigned long long* a, int n, unsigned long long p) {
 	}
 }
 
-//Возвращает значение 1, если с l по r позицию в строке лежит палиндром, для этого использует массив хешей префиксов строки a, суффиксов b, оснований c, иначе возвращает 0
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г§Г­Г Г·ГҐГ­ГЁГҐ 1, ГҐГ±Г«ГЁ Г± l ГЇГ® r ГЇГ®Г§ГЁГ¶ГЁГѕ Гў Г±ГІГ°Г®ГЄГҐ Г«ГҐГ¦ГЁГІ ГЇГ Г«ГЁГ­Г¤Г°Г®Г¬, Г¤Г«Гї ГЅГІГ®ГЈГ® ГЁГ±ГЇГ®Г«ГјГ§ГіГҐГІ Г¬Г Г±Г±ГЁГў ГµГҐГёГҐГ© ГЇГ°ГҐГґГЁГЄГ±Г®Гў Г±ГІГ°Г®ГЄГЁ a, Г±ГіГґГґГЁГЄГ±Г®Гў b, Г®Г±Г­Г®ГўГ Г­ГЁГ© c, ГЁГ­Г Г·ГҐ ГўГ®Г§ГўГ°Г Г№Г ГҐГІ 0
 static int is_pal(int l, int r, int n, unsigned long long* a, unsigned long long* b, unsigned long long* c) {
 	int pal_size = r - l + 1;
 	int before_pal = l - 1;
@@ -459,8 +459,8 @@ long long hash_pal(char* s) {
 	hash_suffix_arr(s, n, b, p);
 	hash_degree_p(c, n, p);
 	int l, r, m;
-	long long t; // Для хранения числа палиндромов в позиции
-	long long res = 0; // Для хранения числа палиндромов в строке
+	long long t; // Г„Г«Гї ГµГ°Г Г­ГҐГ­ГЁГї Г·ГЁГ±Г«Г  ГЇГ Г«ГЁГ­Г¤Г°Г®Г¬Г®Гў Гў ГЇГ®Г§ГЁГ¶ГЁГЁ
+	long long res = 0; // Г„Г«Гї ГµГ°Г Г­ГҐГ­ГЁГї Г·ГЁГ±Г«Г  ГЇГ Г«ГЁГ­Г¤Г°Г®Г¬Г®Гў Гў Г±ГІГ°Г®ГЄГҐ
 	for (int i = 0, j = n - 1; i < n; ++i, --j) {
 		t = 0;
 		l = 1;
