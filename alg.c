@@ -1,14 +1,14 @@
 #include "alg.h"
 
 //Возвращает длину строки s
-static int strlen(char* s) {
-	char* ps = s;
+static int strlen(char *s) {
+	char *ps = s;
 	while (*s != SEP)
 		++s;
 	return(s - ps);
 }
 
-int native_pattern(char* s, char* subs, int* a) {
+int native_pattern(char *s, char *subs, int *a) {
 	int i = 0;
 	int k = 0;
 	int n = strlen(subs);
@@ -29,7 +29,7 @@ int native_pattern(char* s, char* subs, int* a) {
 	return (k);
 }
 
-int optim_pattern(char* s, char* subs, int* a) {
+int optim_pattern(char *s, char *subs, int *a) {
 	int i = 0;
 	int k = 0;
 	int n = strlen(subs);
@@ -50,9 +50,9 @@ int optim_pattern(char* s, char* subs, int* a) {
 
 
 //Возвращает число символов в строке s совпадающих с i1 и i2 позиций
-static int cmp(char* s, int i1, int i2) {
+static int cmp(char *s, int i1, int i2) {
 	int r = 0;
-	char* pi1, * pi2;
+	char *pi1, * pi2;
 	pi1 = &(s[i1]);
 	pi2 = &(s[i2]);
 	while (*pi1 == *pi2 && *pi1 != 0 && *pi2 != 0) {
@@ -64,7 +64,7 @@ static int cmp(char* s, int i1, int i2) {
 }
 
 //Записывает в a z-функцию строки s
-static void block(char* s, int* a) {
+static void block(char *s, int *a) {
 	int n = strlen(s);
 	int l = -1;
 	int r = -1;
@@ -96,7 +96,7 @@ static void block(char* s, int* a) {
 }
 
 //Специальная конкатенация строк s1 и s2
-static void strcat(char* s1, char* s2) {
+static void strcat(char *s1, char *s2) {
 	while (*s1 != SEP)
 		++s1;
 	while (*s2 != '\0') {
@@ -107,15 +107,15 @@ static void strcat(char* s1, char* s2) {
 	*s1 = *s2;
 }
 
-int zf_pattern(char* s, char* subs, int* b) {
-	char* buf = (char*)calloc(100000100, 1);
+int zf_pattern(char *s, char *subs, int *b) {
+	char *buf = (char*)calloc(100000100, 1);
 	int ns = strlen(subs);
 	char ts[3] = "•\n";
 	strcat(buf, subs);
 	strcat(buf, ts);
 	strcat(buf, s);
 	int n = strlen(buf);
-	int* a = (int*)calloc(n + 1, sizeof(int));
+	int *a = (int*)calloc(n + 1, sizeof(int));
 	block(buf, a);
 	int k = 0;
 	for (size_t i = ns; i < n; i++) {
@@ -131,7 +131,7 @@ int zf_pattern(char* s, char* subs, int* b) {
 }
 
 //Возвращает хешь подстроки строки s с началом в i1, концом в i2 - 1 по модулю 2^64
-static long long fhash(char* s, long long i1, long long i2) {
+static long long fhash(char *s, long long i1, long long i2) {
 	unsigned long long r = (unsigned char)s[i1];
 	for (long long i = i1 + 1; i <= i2; ++i) {
 		r = (r * 211);
@@ -140,7 +140,7 @@ static long long fhash(char* s, long long i1, long long i2) {
 	return(r);
 }
 
-int fast_rk(char* s, char* subs, int* a) {
+int fast_rk(char *s, char *subs, int *a) {
 	long long nsubs = strlen(subs);
 	long long isubs = fhash(subs, 0, nsubs - 1);
 	unsigned long long is = fhash(s, 0, nsubs - 1);
@@ -166,7 +166,7 @@ int fast_rk(char* s, char* subs, int* a) {
 }
 
 //Возвращает i наиболее способствующее быстродействию определения позиций подстрок subs в строке s
-static long long find_i(char* s, char* subs) {
+static long long find_i(char *s, char *subs) {
 	long long ns = strlen(s);
 	long long nsubs = strlen(subs);
 	long long i = (long long)ns * ns * nsubs * 64;
@@ -189,16 +189,16 @@ static long long is_prime(long long i) {
 				return(0);
 			}
 		}
-		else
-			for (long long j = 3; j <= sqrt_t; j += 2) {
-				if (i % j == 0)
-					return(0);
-			}
+	else
+		for (long long j = 3; j <= sqrt_t; j += 2) {
+			if (i % j == 0)
+				return(0);
+		}
 	return(1);
 }
 
 //Возвращает модуль для алгоритма Рабина-Карпа
-static long long get_module(char* s, char* subs) {
+static long long get_module(char *s, char *subs) {
 	long long i = find_i(s, subs);
 	while (!is_prime(i))
 		--i;
@@ -206,7 +206,7 @@ static long long get_module(char* s, char* subs) {
 }
 
 //Возвращает хешь подстроки строки s с началом в i1, концом в i2 по модулю q
-static long long chash(char* s, long long i1, long long i2, long long q) {
+static long long chash(char *s, long long i1, long long i2, long long q) {
 	unsigned long long r = (unsigned char)s[i1];
 	for (long long i = i1 + 1; i <= i2; ++i) {
 		r = (r << 8) % q;
@@ -216,7 +216,7 @@ static long long chash(char* s, long long i1, long long i2, long long q) {
 }
 
 
-int classic_rk(char* s, char* subs, int* a) {
+int classic_rk(char *s, char *subs, int *a) {
 	long long q = get_module(s, subs);
 	long long nsubs = strlen(subs);
 	long long isubs = chash(subs, 0, nsubs - 1, q);
@@ -245,7 +245,7 @@ int classic_rk(char* s, char* subs, int* a) {
 }
 
 //Получает массив a граней подстрок s 
-static void prefix_arr(int* a, char* s) {
+static void prefix_arr(int *a, char *s) {
 	a[0] = 0;
 	int i = 1;
 	int j = 0;
@@ -266,7 +266,7 @@ static void prefix_arr(int* a, char* s) {
 }
 
 //Преобразует массив a граней подстрок s в оптимальный для КМП вид
-static void prefix_up(int* a, char* s) {
+static void prefix_up(int *a, char *s) {
 	int n = strlen(s);
 	for (int i = 1; i < n - 1; ++i) {
 		if (s[a[i] + 1] == s[i + 1])
@@ -274,9 +274,9 @@ static void prefix_up(int* a, char* s) {
 	}
 }
 
-int smart_kmp(char* s, char* subs, int* b) {
+int smart_kmp(char *s, char *subs, int *b) {
 	int n = strlen(subs);
-	int* a = (int*)calloc(n + 1, sizeof(int));
+	int *a = (int*)calloc(n + 1, sizeof(int));
 	int i = 0;
 	prefix_arr(a, subs);
 	prefix_up(a, subs);
@@ -304,14 +304,14 @@ int smart_kmp(char* s, char* subs, int* b) {
 }
 
 //Инициализирует массив a размера n числом x
-static void ini(int* a, int n, int x) {
+static void ini(int *a, int n, int x) {
 	for (size_t i = 0; i < n; i++) {
 		a[i] = x;
 	}
 }
 
 //Получает массив величин сдвигов a для БМХ алгоритма по образу subs
-static void bmh_shift_arr(int* a, char* subs) {
+static void bmh_shift_arr(int *a, char *subs) {
 	int n = strlen(subs);
 	ini(a, ALPHABET, n);
 	int i2 = n - 2;
@@ -325,7 +325,7 @@ static void bmh_shift_arr(int* a, char* subs) {
 	}
 }
 
-int basic_bmh(char* s, char* subs, int* b) {
+int basic_bmh(char *s, char *subs, int *b) {
 	int a[ALPHABET];
 	int n = strlen(subs);
 	bmh_shift_arr(a, subs);
@@ -350,7 +350,7 @@ int basic_bmh(char* s, char* subs, int* b) {
 }
 
 //Возвращает 1 если указатель p1 указывает на начало палиндрома а p2 на его конец, иначе возвращает 0
-static int is_palindrom(char* p1, char* p2) {
+static int is_palindrom(char *p1, char *p2) {
 	while (p1 <= p2) {
 		if (*p1 != *p2)
 			return(0);
@@ -360,11 +360,11 @@ static int is_palindrom(char* p1, char* p2) {
 	return(1);
 }
 
-long long native_palindroms(char* s) {
-	char* fp = &(s[strlen(s) - 1]);
+long long native_palindroms(char *s) {
+	char *fp = &(s[strlen(s) - 1]);
 	long long r = 0;
-	for (char* left = s; left < fp; ++left) {
-		for (char* right = left + 1; right <= fp; ++right) {
+	for (char *left = s; left < fp; ++left) {
+		for (char *right = left + 1; right <= fp; ++right) {
 			if (is_palindrom(left, right))
 				++r;
 		}
@@ -373,12 +373,12 @@ long long native_palindroms(char* s) {
 }
 
 //Возвращает число палиндромов нечетной длины в s
-static long long odd_count(char* s) {
-	char* fp = &(s[strlen(s) - 1]);
+static long long odd_count(char *s) {
+	char *fp = &(s[strlen(s) - 1]);
 	long long r = 0;
-	for (char* middle = s; middle <= fp; ++middle) {
-		char* left = middle - 1;
-		char* right = middle + 1;
+	for (char *middle = s; middle <= fp; ++middle) {
+		char *left = middle - 1;
+		char *right = middle + 1;
 		while (left >= s && right <= fp && *left == *right) {
 			++r;
 			--left;
@@ -389,12 +389,12 @@ static long long odd_count(char* s) {
 }
 
 //Возвращает число палиндромов четной длины в s
-static long long even_count(char* s) {
-	char* fp = &(s[strlen(s) - 1]);
+static long long even_count(char *s) {
+	char *fp = &(s[strlen(s) - 1]);
 	long long r = 0;
-	for (char* middle = s; middle <= fp; ++middle) {
-		char* left = middle;
-		char* right = middle + 1;
+	for (char *middle = s; middle <= fp; ++middle) {
+		char *left = middle;
+		char *right = middle + 1;
 		while (left >= s && right <= fp && *left == *right) {
 			++r;
 			--left;
@@ -404,12 +404,12 @@ static long long even_count(char* s) {
 	return(r);
 }
 
-long long fast_native_pal(char* s) {
+long long fast_native_pal(char *s) {
 	return even_count(s) + odd_count(s);
 }
 
 //Записывает в массив a хеши префиксов строки s по основанию p
-static void hash_prefix_arr(char* s, unsigned long long* a, unsigned long long p) {
+static void hash_prefix_arr(char *s, unsigned long long* a, unsigned long long p) {
 	unsigned long long h = 0;
 	int i = 0;
 	while (*s != SEP) {
@@ -420,10 +420,10 @@ static void hash_prefix_arr(char* s, unsigned long long* a, unsigned long long p
 }
 
 //Записывает в массив a хеши суффиксов строки s по основанию p
-static void hash_suffix_arr(char* s, int n, unsigned long long* a, unsigned long long p) {
+static void hash_suffix_arr(char *s, int n, unsigned long long* a, unsigned long long p) {
 	unsigned long long h = 0;
 	int i = n - 1;
-	char* sp = s;
+	char *sp = s;
 	s += n - 1;
 	while (sp <= s) {
 		h = h * p + *s;
@@ -449,7 +449,7 @@ static int is_pal(int l, int r, int n, unsigned long long* a, unsigned long long
 	return(a[r] - (before_pal < 0 ? 0 : a[before_pal]) * (pal_size == n ? 0 : c[pal_size]) == b[l] - (after_pal < n ? b[after_pal] : 0) * (pal_size == n ? 0 : c[pal_size]));
 }
 
-long long hash_pal(char* s) {
+long long hash_pal(char *s) {
 	unsigned long long p = 257;
 	int n = strlen(s);
 	unsigned long long* a = (unsigned long long*)calloc(n, sizeof(unsigned long long));
@@ -497,14 +497,14 @@ long long hash_pal(char* s) {
 	return(res);
 }
 
-long long manacker(char* s) {
+long long manacker(char *s) {
 	int n = strlen(s);
 	int odl = 0;
 	int odr = -1;
 	int el = 0;
 	int er = -1;
-	int* a = (int*)calloc(n, sizeof(int));
-	int* b = (int*)calloc(n, sizeof(int));
+	int *a = (int*)calloc(n, sizeof(int));
+	int *b = (int*)calloc(n, sizeof(int));
 	long long r = 0;
 	for (int i = 0; i < n; ++i) {
 		int odk = i > odr ? 1 : (a[odl + odr - i] < odr - i + 1 ? a[odl + odr - i] : odr - i + 1);
