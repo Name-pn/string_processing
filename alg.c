@@ -409,7 +409,7 @@ long long fast_native_pal(char *s) {
 }
 
 //Записывает в массив a хеши префиксов строки s по основанию p
-static void hash_prefix_arr(char *s, unsigned long long* a, unsigned long long p) {
+static void hash_prefix_arr(char *s, unsigned long long *a, unsigned long long p) {
 	unsigned long long h = 0;
 	int i = 0;
 	while (*s != SEP) {
@@ -420,7 +420,7 @@ static void hash_prefix_arr(char *s, unsigned long long* a, unsigned long long p
 }
 
 //Записывает в массив a хеши суффиксов строки s по основанию p
-static void hash_suffix_arr(char *s, int n, unsigned long long* a, unsigned long long p) {
+static void hash_suffix_arr(char *s, int n, unsigned long long *a, unsigned long long p) {
 	unsigned long long h = 0;
 	int i = n - 1;
 	char *sp = s;
@@ -433,7 +433,7 @@ static void hash_suffix_arr(char *s, int n, unsigned long long* a, unsigned long
 }
 
 //Записывает в массив a степени числа p до степени n
-static void hash_degree_p(unsigned long long* a, int n, unsigned long long p) {
+static void hash_degree_p(unsigned long long *a, int n, unsigned long long p) {
 	unsigned long long tp = 1;
 	for (int i = 0; i < n; ++i) {
 		a[i] = tp;
@@ -442,7 +442,7 @@ static void hash_degree_p(unsigned long long* a, int n, unsigned long long p) {
 }
 
 //Возвращает значение 1, если с l по r позицию в строке лежит палиндром, для этого использует массив хешей префиксов строки a, суффиксов b, оснований c, иначе возвращает 0
-static int is_pal(int l, int r, int n, unsigned long long* a, unsigned long long* b, unsigned long long* c) {
+static int is_pal(int l, int r, int n, unsigned long long *a, unsigned long long *b, unsigned long long *c) {
 	int pal_size = r - l + 1;
 	int before_pal = l - 1;
 	int after_pal = r + 1;
@@ -452,9 +452,9 @@ static int is_pal(int l, int r, int n, unsigned long long* a, unsigned long long
 long long hash_pal(char *s) {
 	unsigned long long p = 257;
 	int n = strlen(s);
-	unsigned long long* a = (unsigned long long*)calloc(n, sizeof(unsigned long long));
-	unsigned long long* b = (unsigned long long*)calloc(n, sizeof(unsigned long long));
-	unsigned long long* c = (unsigned long long*)calloc(n, sizeof(unsigned long long));
+	unsigned long long *a = (unsigned long long*)calloc(n, sizeof(unsigned long long));
+	unsigned long long *b = (unsigned long long*)calloc(n, sizeof(unsigned long long));
+	unsigned long long *c = (unsigned long long*)calloc(n, sizeof(unsigned long long));
 	hash_prefix_arr(s, a, p);
 	hash_suffix_arr(s, n, b, p);
 	hash_degree_p(c, n, p);
