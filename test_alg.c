@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <time.h>
 #include <windows.h>
@@ -9,8 +9,8 @@
 #undef PA //Вывод результатов поиска образа 
 
 //Вывод массива a размера n
-void write_arr(int* a, size_t k) {
-	int* ps = a;
+void write_arr(int *a, size_t k) {
+	int *ps = a;
 	for (size_t i = 0; i < k; i++) {
 		printf("%i ", a[i]);
 	}
@@ -18,18 +18,18 @@ void write_arr(int* a, size_t k) {
 }
 
 //Ввод строки s и образа subs из потока stream
-void read_pattern(char* s, char* subs, FILE* stream) {
+void read_pattern(char *s, char *subs, FILE *stream) {
 	fgets(s, 1000010000, stream);
 	fgets(subs, 1000002, stream);
-	char* ps = subs; 
+	char *ps = subs; 
 	while (*ps != '\n' && *ps != '\0')
 		++ps;
 	*ps = '\0';
 }
 
 //Решение задачи поиска образа subs в строке s разными алгоритмами, и вывод времени работы каждого из них
-void test_pattern(char* s, char* subs) {
-	int* a = (int*)calloc(100000003, sizeof(int));
+void test_pattern(char *s, char *subs) {
+	int *a = (int*)calloc(100000003, sizeof(int));
 	clock_t begin = clock();
 	int k1 = native_pattern(s, subs, a);
 	clock_t end = clock();
@@ -106,7 +106,7 @@ void test_pattern(char* s, char* subs) {
 }
 
 //Решение задачи определения количества палиндромов в строке s разными способами алгоритмами и вывод времени работы каждого
-void test_palindroms(char* s) {
+void test_palindroms(char *s) {
 	clock_t begin = clock();
 	int k1 = 0;//native_palindroms(s);
 	clock_t end = clock();
@@ -149,10 +149,10 @@ int main() {
 	int f;
 	scanf("%i", &f);
 	getchar();
-	FILE* stream = stdin;
+	FILE *stream = stdin;
 	char f_name[255];
-	char* s = (char*)calloc(STRING_SIZE, 1);
-	char* subs = (char*)calloc(10001, 1);
+	char *s = (char*)calloc(STRING_SIZE, 1);
+	char *subs = (char*)calloc(10001, 1);
 	while (f != 3) {
 		switch (f) {
 		case 0:
