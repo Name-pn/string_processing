@@ -4,21 +4,20 @@
 #include <windows.h>
 #include "alg.h"
 #define STRING_SIZE 100000035
-#define PAT_RES
+#define PAT_RES //Вывод результатов поиска образа 
 #define STANDART_STREAM "stdin"
-#undef PA //Вывод результатов поиска образа 
 
 //Вывод массива a размера n
-void write_arr(int *a, size_t k) {
+void write_arr(const int * const a, const size_t n) {
 	int *ps = a;
-	for (size_t i = 0; i < k; i++) {
+	for (size_t i = 0; i < n; i++) {
 		printf("%i ", a[i]);
 	}
 	printf("\n");
 }
 
 //Ввод строки s и образа subs из потока stream
-void read_pattern(char *s, char *subs, FILE *stream) {
+void read_pattern(const char * const s, const char * const subs, const FILE * const stream) {
 	fgets(s, 1000010000, stream);
 	fgets(subs, 1000002, stream);
 	char *ps = subs; 
@@ -28,7 +27,7 @@ void read_pattern(char *s, char *subs, FILE *stream) {
 }
 
 //Решение задачи поиска образа subs в строке s разными алгоритмами, и вывод времени работы каждого из них
-void test_pattern(char *s, char *subs) {
+void test_pattern(const char * const s, const char * const subs) {
 	int *a = (int*)calloc(100000003, sizeof(int));
 	clock_t begin = clock();
 	int k1 = native_pattern(s, subs, a);
@@ -106,7 +105,7 @@ void test_pattern(char *s, char *subs) {
 }
 
 //Решение задачи определения количества палиндромов в строке s разными способами алгоритмами и вывод времени работы каждого
-void test_palindroms(char *s) {
+void test_palindroms(const char * const s) {
 	clock_t begin = clock();
 	int k1 = 0;//native_palindroms(s);
 	clock_t end = clock();
