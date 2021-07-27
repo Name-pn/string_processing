@@ -425,7 +425,7 @@ static void hash_suffix_arr(const char * const s, const int n, unsigned long lon
 	unsigned long long h = 0;
 	int i = n - 1;
 	char *sp = s;
-	char* fp = n - 1;
+	char* fp = s + n - 1;
 	while (sp <= fp) {
 		h = h * p + *fp;
 		a[i--] = h;
