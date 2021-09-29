@@ -327,24 +327,26 @@ static void bmh_shift_arr(int * const a, const char * const subs) {
 
 int basic_bmh(const char * const s, const char * const subs, int * const b) {
 	int a[ALPHABET];
-	int n = strlen(subs);
+	int n = strlen(subs); 
 	bmh_shift_arr(a, subs);
-	--n;
 	int ns = strlen(s);
-	int i = n;
+	int i = n - 1;
 	int k = 0; //Размер массива результата
 	while (i < ns) {
-		int j = n;
+		int j = n - 1;
 		int i1 = 0;
 		while (s[i - i1] == subs[j] && i1 <= i) {
 			--j;
 			++i1;
 			if (j < 0) {
-				b[k] = i - n;
+				b[k] = i - n + 1;
 				++k;
 			}
 		}
-		i += a[(unsigned char)(s[i])];
+		if (j == n - 1)
+			i += a[(unsigned char)(s[i])];
+		else
+			i += a[(unsigned char)subs[(n - 1)]];
 	}
 	return(k);
 }
